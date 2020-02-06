@@ -1,114 +1,28 @@
 // modules
 const fs = require('fs');
-// importações
-const readGameConfig = fs.readFileSync('gameConfig.txt', 'utf8');
+
+// métodos
 const dice = require('./services/dice');
 const getRandomInt = require('./services/getRandom');
+// atributos
+const jsonJogadores = require('./services/players');
+const jsonCasas = require('./services/gameConfig');
+const atributosJogo = require('./services/atributosJogo');
+const atributosTotal = require('./services/atributosTotal');
+let arrayJogadores = [];
 // contadores
 let contadorRodada = 0;
-// atributos
-let arrayJogadores = ['impulsivo', 'exigente', 'cauteloso', 'aleatorio'];
-let jsonJogadores = [
-    {
-        tipoJogador: 'impulsivo',
-        coins: 300,
-        podeJogar: true,
-        elminado: false,
-        dice: null,
-        propriedades: 0,
-        quaisPropriedades: [],
-        casaQueEsta: 0,
-        rodouTabuleiro: 0,
-        qtoRecebeuDeAluguel: 0,
-        qtoGastouCAluguel: 0,
-        qtoGastouComCompra: 0
-
-    },
-    {
-        tipoJogador: 'exigente',
-        coins: 300,
-        podeJogar: true,
-        elminado: false,
-        dice: null,
-        propriedades: 0,
-        quaisPropriedades: [],
-        casaQueEsta: 0,
-        rodouTabuleiro: 0,
-        qtoRecebeuDeAluguel: 0,
-        qtoGastouCAluguel: 0,
-        qtoGastouComCompra: 0
-    },
-    {
-        tipoJogador: 'cauteloso',
-        coins: 300,
-        podeJogar: true,
-        elminado: false,
-        dice: null,
-        propriedades: 0,
-        quaisPropriedades: [],
-        casaQueEsta: 0,
-        rodouTabuleiro: 0,
-        qtoRecebeuDeAluguel: 0,
-        qtoGastouCAluguel: 0,
-        qtoGastouComCompra: 0
-    },
-    {
-        tipoJogador: 'aleatorio',
-        coins: 300,
-        podeJogar: true,
-        elminado: false,
-        dice: null,
-        propriedades: 0,
-        quaisPropriedades: [],
-        casaQueEsta: 0,
-        rodouTabuleiro: 0,
-        qtoRecebeuDeAluguel: 0,
-        qtoGastouCAluguel: 0,
-        qtoGastouComCompra: 0
-    }
-];
-let atributosJogo = {
-    numeroDeJogadoresNoJogo: 4,
-    elminados: []
-}
-let atributosTotal = {
-    contadorTimeOut: 0,
-    totalRodadas: 0,
-    contadorImpulsivo: 0,
-    contadorExigente: 0,
-    contadorCauteloso: 0,
-    contadorAleatorio: 0
-
-}
-// lendo o documento de entrada - gameConfig
-const jsonCasas = readGameConfig.split(/\n|\r\n/).map((data, index) => {
-    let values = data.split(' ');
-    if (values[1] === '') {
-        values.splice(1, 1);
-    }
-    return obj = {
-        numCasa: index + 1,
-        compra: parseInt(values[0]),
-        aluguel: parseInt(values[1]),
-        comprada: false,
-        dono: 'sem dono',
-        presisaReceber: false,
-        qToPrecisaReceber: 0,
-        quemPagouAluguel: []
-    }
-});
 
 for (let n = 0; n < 300; n++) {
     // iteração das partidas
     for (let i = 0; i < 1000; i++) {
         // iteração das rodadas
         if (atributosJogo.numeroDeJogadoresNoJogo === 1) {
-            // verificação se sobrou apenas um jogador da partida e assim, terminar a iteração das rodadas, terminando assim a partida
             break;
         }
     for (let j = 0; j < jsonJogadores.length; j++) {
-        // acessando o json do jogadores
         let jogadores = jsonJogadores[j];
+        arrayJogadores.push(jogadores.tipoJogador);
         if (jogadores.podeJogar === true) {
             jogadores.dice = dice.roll();
             jogadores.casaQueEsta += jogadores.dice;
@@ -140,10 +54,10 @@ for (let n = 0; n < 300; n++) {
                         casaTab.qToPrecisaReceber += casaTab.aluguel;
                         casaTab.quemPagouAluguel.push(jogadores.tipoJogador);
                     } else if (jogadores.coins >= casaTab.compra && casaTab.comprada === false) {
-                        jogadores.qtoGastouComCompra += casaTab.compra;
+                        // jogadores.qtoGastouComCompra += casaTab.compra;
                         jogadores.coins = jogadores.coins - casaTab.compra;
-                        jogadores.quaisPropriedades.push(casaTab.numCasa);
-                        jogadores.propriedades += 1
+                        // jogadores.quaisPropriedades.push(casaTab.numCasa);
+                        // jogadores.propriedades += 1
                         casaTab.comprada = true;
                         casaTab.dono = jogadores.tipoJogador;
                     }
