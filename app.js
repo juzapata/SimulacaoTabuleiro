@@ -13,7 +13,12 @@ let arrayJogadores = [];
 // contadores
 let contadorRodada = 0;
 
+
+
+atributosJogo.numeroDeJogadoresNoJogo = jsonJogadorer.length;
+
 for (let n = 0; n < 300; n++) {
+    
     // iteração das partidas
     for (let i = 0; i < 1000; i++) {
         // iteração das rodadas
@@ -22,6 +27,7 @@ for (let n = 0; n < 300; n++) {
         }
     for (let j = 0; j < jsonJogadores.length; j++) {
         let jogadores = jsonJogadores[j];
+
         arrayJogadores.push(jogadores.tipoJogador);
         if (jogadores.podeJogar === true) {
             jogadores.dice = dice.roll();
