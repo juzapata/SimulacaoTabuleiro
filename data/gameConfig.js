@@ -1,8 +1,9 @@
 const fs = require('fs');
+const houses = require('../model/houseAttributes');
+
 
 
 const readGameConfig = fs.readFileSync('gameConfig.txt', 'utf8');
-
 // lendo o documento de entrada - gameConfig
 const jsonCasas = readGameConfig.split(/\n|\r\n/).map((data, index) => {
     let values = data.split(' ');

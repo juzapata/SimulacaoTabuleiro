@@ -5,18 +5,22 @@ const fs = require('fs');
 const dice = require('./services/dice');
 const getRandomInt = require('./services/getRandom');
 // atributos
-const jsonJogadores = require('./services/players');
-const jsonCasas = require('./services/gameConfig');
-const atributosJogo = require('./services/atributosJogo');
-const atributosTotal = require('./services/atributosTotal');
+const Players = require('./model/players');
+let jsonCasas = require('./data/gameConfig');
+const gameAttributes = require('./model/gameAttributes');
+const totalAttributes = require('./model/totalAttributes');
 let arrayJogadores = [];
-// contadores
+
+let impulsivo = new Players('impulsivo');
+let exigente = new Players('exigente');
+let cauteloso = new Players('cauteloso');
+let aleatorio = new Players('aleatorio');
+let atributosJogo = new gameAttributes();
+let atributosTotal = new totalAttributes();
 let contadorRodada = 0;
 
 
-
-atributosJogo.numeroDeJogadoresNoJogo = jsonJogadorer.length;
-
+//console.log(jsonCasas);
 for (let n = 0; n < 300; n++) {
     
     // iteração das partidas
